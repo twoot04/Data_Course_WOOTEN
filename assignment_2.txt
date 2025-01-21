@@ -1,0 +1,21 @@
+csv_files <- list.files(path = "Data", pattern = ".csv", all.files = TRUE,
+                        full.names = TRUE, recursive = TRUE, ignore.case = TRUE)
+length(csv_files)
+read.csv("wingspan_vs_mass.csv")
+df <- list.files(path = "Data", 
+                   recursive = TRUE, 
+                   pattern = "wingspan_vs_mass.csv", 
+                   full.names = TRUE)
+
+dat <- read.csv(df)
+dat
+head(dat, 5)
+list.files(path = "Data", pattern = "^b", all.files = TRUE,
+           full.names = FALSE, recursive = TRUE, ignore.case = FALSE)
+
+dat <- "data-shell/creatures/basilisk.dat"
+dat_2 <- "data-shell/data/pdb/benzaldehyde.pdb"
+dat_3 <- "Messy_Take2/b_df.csv"
+
+read.csv(dat_3)
+
