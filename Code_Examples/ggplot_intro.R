@@ -38,15 +38,18 @@ ggplot(midwest, aes(x=area, y=poptotal))  # area and poptotal are columns in 'mi
 # That’s because, any information that is part of the source dataframe has to be specified inside the aes() function.
 
 # Give it a geom to map to your defined aesthetics... Basic Scatterplot, in this case:
-ggplot(midwest, aes(x=area, y=poptotal)) + geom_point() # The "+" tells ggplot to add another layer to our base plot
+ggplot(midwest, aes(x=area, y=poptotal)) +
+  geom_point() # The "+" tells ggplot to add another layer to our base plot
 
 # Add another geom ... a trendline:
-ggplot(midwest, aes(x=area, y=poptotal)) + geom_point() + geom_smooth(method = "lm")
+ggplot(midwest, aes(x=area, y=poptotal)) +
+  geom_point(color = "salmon", size = 4, shape = 20) + 
+  geom_smooth(method = "lm", color = "magenta", fill = 'green')
 # The line of best fit is in blue. Can you find out what other method options are available for geom_smooth? 
 
 # Store your plot as an object to add to...
 p <- ggplot(midwest, aes(x=area, y=poptotal)) + geom_point() + geom_smooth(method = "lm")
-
+p
 # Zoom in
 p + lims(x=c(0,0.1),y=c(0,1000000)) # what did this do?
 p + coord_cartesian(xlim=c(0,0.1), ylim=c(0, 1000000)) # how is this different?
@@ -62,11 +65,15 @@ p2 + labs(title="Area Vs Population",
           caption="Midwest Demographics")
 
 # Nifty!  So here's the full function call to make this plot:
-ggplot(midwest, aes(x=area, y=poptotal)) + 
+ggplot(midwest, aes(x=area, y=poptotal)) + #set up and the mapping 
   geom_point() + 
   geom_smooth(method="lm") + 
   coord_cartesian(xlim=c(0,0.1), ylim=c(0, 1000000)) + 
-  labs(title="Area Vs Population", subtitle="From midwest dataset", y="Population", x="Area", caption="Midwest Demographics")
+  labs(title="Area Vs Population", 
+       subtitle="From midwest dataset", 
+       y="Population", 
+       x="Area", 
+       caption="Midwest Demographics")
 
 # Let's make it pretty ####
 
@@ -91,7 +98,7 @@ p3
 
 # Don't like those colors?
 p3 + scale_color_brewer(palette = "Set1")
-
+p3 + scale_color_viridis_d(option = 'mako', end=.8)
 # Want more color choices? You can check them out in the RColorBrewer package, or even make your own
 library(RColorBrewer)
 brewer.pal.info
@@ -130,7 +137,7 @@ p4
 p4 + facet_wrap(~ state)
 p4 + facet_wrap(~ state, scales = "free") + theme(legend.position = "none")
 p4 + facet_wrap(~ state) + theme(legend.position = "none", strip.text.x = element_text(size = 12, face="bold"))
-p4 + facet_wrap(~ state) + theme(legend.position = "none", 
+p4 + facet_wrap(~ state,scales = 'free') + theme(legend.position = "none",
                                  strip.text.x = element_text(size = 12, face="bold"),
                                  strip.background = element_rect(fill = "lightblue"))
 
@@ -138,11 +145,11 @@ p4 + facet_wrap(~ state) + theme(legend.position = "none",
 # Some other "geom" types ... for categorical x axis
 p5 = ggplot(midwest, aes(x=state,y=percollege, fill=state)) + labs(x="State",y="Percent with college degree")
 p5
-
+p5 + geom_point()
 p5 + geom_boxplot()
 p5 + geom_violin()
 p5 + geom_bar(stat="identity") # something wrong with this picture!
-
+p5 + geom_col()
 
 # Geoms for looking at a single variable's distribution:
 library(carData)
